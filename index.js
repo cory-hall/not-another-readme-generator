@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const generateMarkdown = require('./utils/generateMarkdown');
+const generateMarkdown = require('./utils/generateMarkdown')
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -105,7 +105,10 @@ function init() {
       }
    ])
    .then(projectData => {
-      console.log(projectData);
+      generateMarkdown(projectData);
+   })
+   .catch(err => {
+      console.log(err);
    })
 }
 
