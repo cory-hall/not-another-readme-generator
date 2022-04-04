@@ -1,19 +1,36 @@
 const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown')
+const fs = require('fs');
 
 // TODO: Create an array of questions for user input
 const questions = [
    "What is the name of your repository?",
-   "In a detailed manner, how would you describe your project?",
-   "What special instructions, if any, are needed to use this app? (Don't forget any required programs or library dependencies)",
+   "In a detailed manner, how would you describe that your project solves a problem?",
+   "What instructions are required for installation?",
    "What licensing would you like to list for your project? (Choose one)",
+   "What steps are needed to utilize this app?",
    "What steps are needed to test this app?",
+   "Who all contributed to this project?",
    "What is your GitHub username?",
    "What is your e-mail address?"
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) { }
+// removed fileName parameter(???)
+function writeToFile(data) { 
+   return new Promise((resolve, reject) => {
+      fs.writeFile('./generated-README.md', data, err => {
+         if(err) {
+            reject(err);
+            return;
+         }
+         resolve ({
+            ok: true,
+            message: 'README created!'
+         }) 
+      })
+   })
+}
 
 // TODO: Create a function to initialize app
 function init() {
@@ -44,10 +61,10 @@ function init() {
       },
       {
          type: 'input',
-         name: 'usage',
+         name: 'installation',
          message: questions[2],
-         validate: usageInput => {
-            if (usageInput) {
+         validate: installInput => {
+            if (installInput) {
                return true;
             } else {
                console.log("Please enter usage instructions!");
@@ -59,30 +76,26 @@ function init() {
          name: 'license',
          message: questions[3],
          choices: ['MIT', 'Apache', 'GPL v3', 'BSD 2-Clause', 'BSD 3-Clause'],
-         validate: licenseInput => {
-            if (licenseInput) {
-               return true;
-            } else {
-               console.log('Please choose a license!');
-            }
-         }
+      },
+      {
+         type: 'input',
+         name: 'usage',
+         message: questions[4],
       },
       {
          type: 'input',
          name: 'testing',
-         message: questions[4],
-         validate: testingInput => {
-            if (testingInput) {
-               return true;
-            } else {
-               console.log("Please add any necessary instructions for usage!");
-            }
-         }
+         message: questions[5]
+      },
+      {
+         type: 'input',
+         name: 'contributors',
+         message: questions[6]
       },
       {
          type: 'input',
          name: 'github',
-         message: questions[5],
+         message: questions[7],
          validate: githubInput => {
             if (githubInput) {
                return true;
@@ -94,7 +107,7 @@ function init() {
       {
          type: 'input',
          name: 'email',
-         message: questions[6],
+         message: questions[8],
          validate: emailInput => {
             if (emailInput) {
                return true
@@ -105,7 +118,13 @@ function init() {
       }
    ])
    .then(projectData => {
-      generateMarkdown(projectData);
+      return generateMarkdown(projectData);
+   })
+   .then(projectData => {
+      return writeToFile(projectData)
+   })
+   .then(writeToFileResponse => {
+      console.log(writeToFileResponse.message);
    })
    .catch(err => {
       console.log(err);
@@ -115,4 +134,3 @@ function init() {
 // Function call to initialize app
 init();
 
-module.exports = init;
