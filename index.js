@@ -1,8 +1,11 @@
+// import inquirer
 const inquirer = require('inquirer');
-const generateMarkdown = require('./utils/generateMarkdown')
+// import generateMarkdown function
+const generateMarkdown = require('./utils/generateMarkdown');
+// import fileSystem
 const fs = require('fs');
 
-// TODO: Create an array of questions for user input
+// array to hold questions for user input
 const questions = [
    "What is the name of your repository?",
    "In a detailed manner, how would you describe that your project solves a problem?",
@@ -15,8 +18,7 @@ const questions = [
    "What is your e-mail address?"
 ];
 
-// TODO: Create a function to write README file
-// removed fileName parameter(???)
+// function to write data to the generated-README file
 function writeToFile(data) { 
    return new Promise((resolve, reject) => {
       fs.writeFile('./generated-README.md', data, err => {
@@ -32,7 +34,7 @@ function writeToFile(data) {
    })
 }
 
-// TODO: Create a function to initialize app
+// main function of app, gets user input via inquirer in terminal and returns a promise
 function init() {
    return inquirer.prompt([
       {
@@ -117,15 +119,19 @@ function init() {
          }
       }
    ])
+   // gets returned projectData and sends to generateMarkdown function
    .then(projectData => {
       return generateMarkdown(projectData);
    })
+   // gets the generatedMarkdown (projectData) and sends to writeToFile function
    .then(projectData => {
       return writeToFile(projectData)
    })
+   // console log if file creation was successful
    .then(writeToFileResponse => {
       console.log(writeToFileResponse.message);
    })
+   // catch for errors
    .catch(err => {
       console.log(err);
    })

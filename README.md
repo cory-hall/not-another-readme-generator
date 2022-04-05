@@ -13,7 +13,7 @@
   - [License](#license)
 
   ## Installation
-  This app is designed only for backend use, which requires node.js to run from a local terminal, like Visual Studios built in terminal or git bash terminal. This app also requires the inquirer node module. To install any required modules, simply clone or download the code and in your terminal, run 'node install' and all the necessary files will be downloaded.
+  This app is designed only for backend use, which requires node.js to run from a local terminal, like Visual Studios built in terminal or git bash terminal. This app also requires the inquirer node module. To install any required modules, simply clone or download the code and in your terminal, run 'npm install' and all the necessary files will be downloaded.
 
   ## Usage
   Simply follow the installation instructions, then run 'node index' within your terminal, and follow any on screen questions. The output will be saved to the file called 'generated-README.md'.

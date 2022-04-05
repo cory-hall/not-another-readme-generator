@@ -1,7 +1,7 @@
+// get current year for licensing
 const year = new Date().getFullYear();
 
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
+// function to render the license badge
 function renderLicenseBadge(license) {
   switch (license) {
     case 'MIT':
@@ -19,8 +19,7 @@ function renderLicenseBadge(license) {
   };
 };
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
+// function to add a link to the respect license to the badge
 function renderLicenseLink(license) {
   let link = "";
 
@@ -44,14 +43,14 @@ function renderLicenseLink(license) {
       return "";
   };
 
+  // creating the badge with link
   let badge = renderLicenseBadge(license);
   let licenseBadge = "[![License: " + license + "](" + badge + ")](" + link + ")";
 
   return licenseBadge;
 };
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
+// function to add text to summarize each different license type
 function renderLicenseSection(license, name) {
   let licenseText = "";
 
@@ -175,7 +174,7 @@ function renderLicenseSection(license, name) {
   return licenseText;
 };
 
-// TODO: Create a function to generate markdown for README
+// function to generate all markdown for the app
 function generateMarkdown(data) {
   console.log(data);
 
@@ -215,4 +214,5 @@ function generateMarkdown(data) {
 `;
 }
 
+// export generateMarkdown function for use in index.js
 module.exports = generateMarkdown;
